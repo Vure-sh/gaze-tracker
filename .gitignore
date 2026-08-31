@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+models/calibration_model.pkl
+models/face_landmarker.task
+*.log
+.DS_Store
