@@ -208,3 +208,44 @@ class GazeVisualizer:
             cv2.putText(hud, gaze_str, (20, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 255, 255), 1, cv2.LINE_AA)
 
         return hud
+
+    def draw_confidence_bar(
+        self,
+        frame: np.ndarray,
+        confidence: float,
+        x: int = 10,
+        y: int = 200,
+        width: int = 120,
+        height: int = 10,
+    ) -> np.ndarray:
+        """Draw a color-coded tracking confidence bar onto *frame* in-place.
+
+        The bar transitions from red (low) through yellow to green (high) and
+        is annotated with a percentage label.
+
+        Args:
+            frame: BGR image to draw on.
+            confidence: Value in [0.0, 1.0].
+            x, y: Top-left corner of the bar.
+            width, height: Dimensions of the bar.
+
+        Returns:
+            The modified frame (same object, mutated in-place).
+        """
+        conf = max(0.0, min(1.0, float(confidence)))
+        fill_w = int(width * conf)
+        # Background
+        cv2.rectangle(frame, (x, y), (x + width, y + height), (50, 50, 50), -1)
+        # Color: red -> yellow -> green
+        r = int(255 * (1.0 - conf))
+        g = int(255 * conf)
+        bar_color = (0, g, r)
+        if fill_w > 0:
+            cv2.rectangle(frame, (x, y), (x + fill_w, y + height), bar_color, -1)
+        # Border
+        cv2.rectangle(frame, (x, y), (x + width, y + height), (120, 120, 120), 1)
+        # Label
+        label = f"{int(conf * 100)}%"
+        cv2.putText(frame, label, (x + width + 6, y + height - 1),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.38, (220, 220, 220), 1, cv2.LINE_AA)
+        return frame
