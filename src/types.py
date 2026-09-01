@@ -74,6 +74,13 @@ class TrackingQuality:
     is_valid: bool                       # True if tracking meets all minimum quality gates
     failure_reasons: List[str] = field(default_factory=list)  # Diagnostic failure descriptions
 
+    def __repr__(self) -> str:
+        return (
+            f"TrackingQuality(conf={self.confidence:.2f}, ear={self.ear_score:.2f}, "
+            f"circ={self.circularity_score:.2f}, valid={self.is_valid}, "
+            f"failures={self.failure_reasons})"
+        )
+
 
 @dataclass
 class GazeFeatures:
@@ -139,6 +146,13 @@ class GazePrediction:
     confidence: float = 1.0
     is_valid: bool = True
     timestamp: float = 0.0
+
+    def __repr__(self) -> str:
+        return (
+            f"GazePrediction(screen=({self.screen_x:.1f}, {self.screen_y:.1f}), "
+            f"norm=({self.norm_x:.3f}, {self.norm_y:.3f}), "
+            f"conf={self.confidence:.2f}, valid={self.is_valid})"
+        )
 
 
 @dataclass
