@@ -1,8 +1,18 @@
 [project]
 name = "gaze-tracker"
 version = "0.1.0"
-description = "Add your description here"
+description = "Production-grade real-time webcam eye & gaze tracker using MediaPipe, OpenCV, and scikit-learn"
 readme = "README.md"
+license = { text = "MIT" }
+keywords = ["gaze-tracking", "eye-tracking", "mediapipe", "computer-vision", "opencv"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: Scientific/Engineering :: Human Machine Interfaces",
+]
 authors = [
     { name = "Vure-sh", email = "alimohammed42829@gmail.com" }
 ]
