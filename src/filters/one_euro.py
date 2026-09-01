@@ -132,3 +132,29 @@ class OneEuroFilter2D:
         """Reset both X and Y filter channels."""
         self.fx.reset()
         self.fy.reset()
+
+    def update_params(
+        self,
+        min_cutoff: Optional[float] = None,
+        beta: Optional[float] = None,
+        d_cutoff: Optional[float] = None,
+        deadband: Optional[float] = None,
+    ) -> None:
+        """Update filter hyper-parameters at runtime without resetting history.
+
+        Useful for live tuning during interactive calibration sessions.
+        Only provided (non-None) arguments are updated.
+
+        Args:
+            min_cutoff: Minimum cutoff frequency in Hz. Lower values smooth more
+                during fixation but increase lag.
+            beta: Velocity coupling coefficient. Higher values reduce saccade lag.
+            d_cutoff: Derivative low-pass cutoff frequency in Hz.
+            deadband: Absolute pixel deadband for micro-jitter suppression.
+        """
+        for attr, val in [("min_cutoff", min_cutoff), ("beta", beta),
+                          ("d_cutoff", d_cutoff), ("deadband", deadband)]:
+            if val is not None:
+                setattr(self, attr, float(val))
+                setattr(self.fx, attr, float(val))
+                setattr(self.fy, attr, float(val))
