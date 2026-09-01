@@ -387,5 +387,14 @@ tests/test_adversarial_m1_quality.py .............                       [100%]
 
 ---
 
+## Contributing
+
+Contributions are welcome! Please open an issue first to discuss what you'd like to change.
+
+- Fork the repo and create a feature branch from `master`.
+- Run the test suite (`pytest`) and make sure all tests pass before submitting a PR.
+- Follow the existing code style — type hints and docstrings are appreciated.
+- Keep PRs focused; large or unrelated changes slow review.
+
 ## License
 MIT License.
