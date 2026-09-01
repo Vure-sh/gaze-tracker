@@ -248,3 +248,15 @@ class GazePipeline:
             self.calibrator.points = self.calibrator.generate_points()
             self.gaze_filter.reset()
         return success
+
+    def get_stats(self) -> Dict[str, Any]:
+        """Return a snapshot dict of live pipeline performance and state metrics."""
+        return {
+            "fps": round(self.get_fps(), 2),
+            "latency_ms": round(self.get_average_latency_ms(), 2),
+            "is_calibrated": self.regressor.is_trained,
+            "filter_type": self.filter_type,
+            "calibration_state": self.calibrator.state.name,
+            "screen_resolution": (self.config.screen_width, self.config.screen_height),
+            "camera_resolution": (self.config.camera_width, self.config.camera_height),
+        }
