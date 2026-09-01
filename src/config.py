@@ -194,3 +194,25 @@ class GazeConfig:
                 self.screen_height = primary.height
         except Exception:
             pass
+
+    def validate(self) -> list:
+        """Validate configuration values and return a list of warning strings.
+
+        Returns:
+            List of human-readable warning strings for any out-of-range settings.
+            An empty list means the configuration is fully valid.
+        """
+        warnings: list = []
+        if not 0.0 < self.quality.min_confidence < 1.0:
+            warnings.append(f"quality.min_confidence={self.quality.min_confidence} should be in (0, 1)")
+        if self.poly_degree < 1 or self.poly_degree > 4:
+            warnings.append(f"poly_degree={self.poly_degree} unusual; expected 1-4")
+        if self.ridge_alpha <= 0:
+            warnings.append(f"ridge_alpha={self.ridge_alpha} must be positive")
+        if self.one_euro_min_cutoff <= 0:
+            warnings.append(f"one_euro_min_cutoff={self.one_euro_min_cutoff} must be positive")
+        if self.screen_width <= 0 or self.screen_height <= 0:
+            warnings.append(f"screen_resolution={self.screen_width}x{self.screen_height} invalid")
+        if self.camera_width <= 0 or self.camera_height <= 0:
+            warnings.append(f"camera_resolution={self.camera_width}x{self.camera_height} invalid")
+        return warnings
