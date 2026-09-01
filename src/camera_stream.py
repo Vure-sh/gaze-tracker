@@ -250,6 +250,19 @@ class ThreadedCameraStream:
         """Check if camera capture device is actively opened."""
         return self.cap is not None and self.cap.isOpened() and self._running
 
+    @property
+    def resolution(self) -> Tuple[int, int]:
+        """Return the actual captured frame resolution as (width, height).
+
+        Falls back to configured dimensions if the device is not yet open.
+        """
+        if self.cap is not None and self.cap.isOpened():
+            w = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            h = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            if w > 0 and h > 0:
+                return (w, h)
+        return (self.width or 0, self.height or 0)
+
     def stop(self) -> None:
         """Stop capture thread and release device resources."""
         self._running = False
